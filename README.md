@@ -1,4 +1,4 @@
-# Spotify Craft (Lyrics Cord)
+# SpotifyCraft 
 oh yeah we are planning to add our own new ui so instead of this be like a copy of the original mod it becomes our own
 **Live Spotify lyrics inside Minecraft.**
 
