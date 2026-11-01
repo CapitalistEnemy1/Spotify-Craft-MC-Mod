@@ -1,8 +1,8 @@
 # SpotifyCraft 
 
-** I have spoken to my lawyer he told me if I want to continue this we can but if we are asked to take it down we shall oblige**
+**I have spoken to my lawyer he told me if I want to continue this we can but if we are asked to take it down we shall oblige**
 
-** if we are asked to take it down we will just rebuild the mod from scratch and rebrand and rebuild without their source code**
+**if we are asked to take it down we will just rebuild the mod from scratch and rebrand and rebuild without their source code**
 
 **Live Spotify lyrics inside Minecraft.**
 
