@@ -10,7 +10,7 @@ Spotify Craft brings your currently playing music into Minecraft with animated, 
 
 The current source for this github is only for 1 jar (1.21.11), so when you build it it will only be compatible with 1.21.11!
 
-> **Free and open source:** Spotify Craft is now available for everyone to use. It was previously a paid mod.
+> **Free and open source:**  
 
 ## Contents
 
