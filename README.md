@@ -1,5 +1,5 @@
 # Spotify Craft (Lyrics Cord)
-
+oh yeah we are planning to add our own new ui so instead of this be like a copy of the original mod it becomes our own
 **Live Spotify lyrics inside Minecraft.**
 
 Spotify Craft brings your currently playing music into Minecraft with animated, 3D lyrics that appear in the sky and stay in sync with your song. Enjoy a now-playing display, album artwork, visualisers, custom skies, cosmetics, and a glass-style hotbar.
