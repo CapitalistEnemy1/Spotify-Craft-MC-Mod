@@ -507,8 +507,9 @@ final class WorldPanel {
         this.hatPage = Math.floorMod(this.hatPage, pages);
         this.text(WorldPanel.tr("hat"), 206.0f, 45.0f, 0.62f, 0xFFFFFF, 0.55f * a);
         for (i = 0; i < per && (idx = this.hatPage * per + i) < hats.length; ++i) {
-            this.option("hat" + idx, 206.0f + (float)(i % 2 * 82), 54 + i / 2 * 18, 78.0f, 15.0f, class_2561.method_43471((String)("neonlyrics.ui.hat." + hats[idx])).getString(), cf.hat == idx, () -> {
-                cf.hat = idx;
+            int hatIndex = idx;
+            this.option("hat" + hatIndex, 206.0f + (float)(i % 2 * 82), 54 + i / 2 * 18, 78.0f, 15.0f, class_2561.method_43471((String)("neonlyrics.ui.hat." + hats[hatIndex])).getString(), cf.hat == hatIndex, () -> {
+                cf.hat = hatIndex;
             }, a);
         }
         this.pager("ht", 108.0f, this.hatPage, pages, d -> this.hatPage += d, a);
