@@ -119,7 +119,7 @@ public final class SkyRenderer {
         Config c = NeonLyrics.cfg();
         if (c.sky != lastSky) {
             if (lastSky != -99 && mc.field_1724 != null) {
-                p = SkyPreset.get(c.sky);
+                p = c.customSkyboxEnabled ? SkyPreset.get(c.sky) : null;
                 Island.notify(p == null ? Fx.t("neonlyrics.sky.off", new Object[0]) : Fx.t("neonlyrics.sky.enabled", Fx.t(p.key(), new Object[0])), p != null);
             }
             lastSky = c.sky;
@@ -129,7 +129,7 @@ public final class SkyRenderer {
             return;
         }
         SkyRenderer.updateClouds(mc, c);
-        p = SkyPreset.get(c.sky);
+        p = c.customSkyboxEnabled ? SkyPreset.get(c.sky) : null;
         boolean bl = wantRain = p != null && c.realWeather && (p.weather == SkyPreset.Weather.RAIN || p.weather == SkyPreset.Weather.THUNDER) && mc.field_1687.method_27983() == class_1937.field_25179;
         if (wantRain) {
             mc.field_1687.method_8519(1.0f);
@@ -143,7 +143,7 @@ public final class SkyRenderer {
     }
 
     private static void updateClouds(class_310 mc, Config c) {
-        boolean hide = c.hideClouds && c.sky >= 0;
+        boolean hide = c.customSkyboxEnabled && c.hideClouds && c.sky >= 0;
         class_7172 opt = mc.field_1690.method_42528();
         if (hide && opt.method_41753() != class_4063.field_18162) {
             c.cloudsBefore = ((class_4063)opt.method_41753()).name();
@@ -162,7 +162,7 @@ public final class SkyRenderer {
     }
 
     public static void render(class_332 g, class_9779 delta) {
-        if (!License.ok()) {
+        if (!License.ok() || !NeonLyrics.cfg().customSkyboxEnabled) {
             return;
         }
         class_310 mc = class_310.method_1551();
@@ -175,7 +175,7 @@ public final class SkyRenderer {
         lastNanos = nowNs;
         float pt = delta.method_60637(false);
         SkyRenderer.setupCamera(g, mc, pt);
-        SkyPreset p = SkyPreset.get(c.sky);
+        SkyPreset p = c.customSkyboxEnabled ? SkyPreset.get(c.sky) : null;
         float old = Gfx.alpha;
         Gfx.alpha = 1.0f;
         if (p != null && p.weather == SkyPreset.Weather.THUNDER && mc.field_1687.method_27983() == class_1937.field_25179) {

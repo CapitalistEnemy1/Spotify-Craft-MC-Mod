@@ -393,8 +393,8 @@ public final class Gfx {
 
     private static class_11719 resolve(Role r) {
         if (r == Role.LYRICS) {
-            int i = Math.floorMod(NeonLyrics.cfg().lyricsFont, FONT_IDS.length);
-            return FD[i][2];
+            int i = NeonLyrics.cfg().lyricsFont;
+            return i >= 0 && i < FONT_IDS.length ? FD[i][2] : null;
         }
         if (!Gfx.clean()) {
             return null;
