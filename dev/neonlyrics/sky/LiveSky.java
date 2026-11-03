@@ -504,7 +504,7 @@ public final class LiveSky {
         double p = v * (1.0 - s);
         double q = v * (1.0 - s * f);
         double u = v * (1.0 - s * (1.0 - f));
-        return (int)Math.round(rr * 255.0) << 16 | (int)Math.round(gg * 255.0) << 8 | (int)Math.round((switch ((int)Math.floor(hh)) {
+        double bb = switch ((int)Math.floor(hh)) {
             case 0 -> {
                 rr = v;
                 gg = u;
@@ -535,7 +535,8 @@ public final class LiveSky {
                 gg = p;
                 yield q;
             }
-        }) * 255.0);
+        };
+        return (int)Math.round(rr * 255.0) << 16 | (int)Math.round(gg * 255.0) << 8 | (int)Math.round(bb * 255.0);
     }
 
     private void aurora(double az, float el, float strength) {
