@@ -31,6 +31,9 @@ jobs:
         with:
           gradle-version: '9.1.0'
 
+      - name: Prepare intermediary source mappings
+        run: python3 scripts/prepare_intermediary_mappings.py
+
       - name: Build mod
         run: gradle clean build --no-daemon
 
