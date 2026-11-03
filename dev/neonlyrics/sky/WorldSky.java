@@ -1834,7 +1834,7 @@ public final class WorldSky {
             double lift = 2.5 + RND.nextDouble() * 6.0;
             double stair = (double)(RND.nextBoolean() ? 1 : -1) * (5.0 + RND.nextDouble() * 8.0);
             for (int r = 0; r < rows.size(); ++r) {
-                List rr = (List)rows.get(r);
+                List<Chunk> rr = rows.get(r);
                 double total = -gap;
                 for (Chunk c : rr) {
                     total += gap + (double)c.widthPx * degPerPx * (double)c.size;
