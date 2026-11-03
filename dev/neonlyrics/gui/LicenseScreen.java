@@ -57,7 +57,7 @@ extends class_437 {
         this.box.method_47404((class_2561)class_2561.method_43470((String)"LCORD-XXXX-XXXX-XXXX"));
         String old = NeonLyrics.cfg().licenseCode;
         this.box.method_1852(old.startsWith("R1:") ? "" : old);
-        this.method_37063((class_364)this.box);
+        this.method_37063(this.box);
         this.method_48265((class_364)this.box);
     }
 
