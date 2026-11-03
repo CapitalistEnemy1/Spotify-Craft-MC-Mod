@@ -79,7 +79,7 @@ extends class_437 {
         this.idBox.method_1868(-790529);
         this.idBox.method_1852(NeonLyrics.cfg().spotifyClientId);
         this.idBox.method_47404((class_2561)class_2561.method_43470((String)Fx.t("neonlyrics.hint.clientid", new Object[0])).method_27692(class_124.field_1063));
-        this.method_37063((class_364)this.idBox);
+        this.method_37063(this.idBox);
     }
 
     private void go(int s) {
