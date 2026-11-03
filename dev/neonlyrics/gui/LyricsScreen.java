@@ -191,7 +191,7 @@ extends class_437 {
         this.idBox.method_1868(-1118479);
         this.idBox.method_1852(LyricsScreen.c().spotifyClientId);
         this.idBox.method_47404((class_2561)class_2561.method_43470((String)LyricsScreen.t("hint.clientid", new Object[0])).method_27692(class_124.field_1063));
-        this.method_37063((class_364)this.idBox);
+        this.method_37063(this.idBox);
         LyricsScreen.show(this.idBox, false);
     }
 
@@ -1823,11 +1823,11 @@ extends class_437 {
     }
 
     private class_2561 comp(String s, T t) {
-        Map m = this.comps.computeIfAbsent(t, k -> new HashMap());
+        Map<String, class_2561> m = this.comps.computeIfAbsent(t, k -> new HashMap<>());
         if (m.size() > 600) {
             m.clear();
         }
-        return m.computeIfAbsent(s, k -> class_2561.method_43470((String)k).method_27696(class_2583.field_24360.method_27704(FONTS.get((Object)t))));
+        return m.computeIfAbsent(s, k -> class_2561.method_43470(k).method_27696(class_2583.field_24360.method_27704(FONTS.get(t))));
     }
 
     private int tw(String s, T t) {
