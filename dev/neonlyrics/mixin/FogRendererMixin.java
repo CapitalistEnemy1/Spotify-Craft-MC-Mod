@@ -34,7 +34,7 @@ public abstract class FogRendererMixin {
         }
         Vector4f v = (Vector4f)cir.getReturnValue();
         if (v != null && WorldSky.tintFog(v)) {
-            cir.setReturnValue((Object)v);
+            cir.setReturnValue(v);
         }
     }
 }
