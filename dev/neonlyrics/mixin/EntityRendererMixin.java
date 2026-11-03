@@ -26,7 +26,7 @@ public abstract class EntityRendererMixin {
     @Inject(method={"method_3933(Lnet/minecraft/class_1297;Lnet/minecraft/class_4604;DDD)Z"}, at={@At(value="HEAD")}, cancellable=true, require=0)
     private void neonlyrics$hideForDeathFx(class_1297 entity, class_4604 frustum, double x, double y, double z, CallbackInfoReturnable<Boolean> cir) {
         if (DeathFx.hides(entity)) {
-            cir.setReturnValue((Object)false);
+            cir.setReturnValue(false);
         }
     }
 }
