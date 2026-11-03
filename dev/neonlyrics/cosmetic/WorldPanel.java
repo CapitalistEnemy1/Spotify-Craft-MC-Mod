@@ -531,8 +531,8 @@ final class WorldPanel {
         this.toggle(0, WorldPanel.tr("hotbar"), cf.glassHotbar, () -> {
             cf.glassHotbar = !cf.glassHotbar;
         }, a);
-        this.toggle(1, WorldPanel.tr("island"), cf.islandEnabled, () -> {
-            cf.islandEnabled = !cf.islandEnabled;
+        this.toggle(1, WorldPanel.tr("island"), cf.spotifyHudEnabled, () -> {
+            cf.spotifyHudEnabled = !cf.spotifyHudEnabled;
         }, a);
         this.toggle(2, WorldPanel.tr("clock"), cf.showClock, () -> {
             cf.showClock = !cf.showClock;

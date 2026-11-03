@@ -203,7 +203,7 @@ public final class WorldSky {
             return;
         }
         Config c = NeonLyrics.cfg();
-        SkyPreset p = SkyPreset.get(c.sky);
+        SkyPreset p = c.customSkyboxEnabled ? SkyPreset.get(c.sky) : null;
         long nowNs = System.nanoTime();
         float dt = Math.min(0.1f, (float)(nowNs - lastNanos) / 1.0E9f);
         lastNanos = nowNs;
@@ -1223,7 +1223,7 @@ public final class WorldSky {
     }
 
     public static boolean tintFog(Vector4f v) {
-        if (fogMix <= 0.01f) {
+        if (!NeonLyrics.cfg().customSkyboxEnabled || fogMix <= 0.01f) {
             return false;
         }
         v.x += (fogR - v.x) * fogMix;

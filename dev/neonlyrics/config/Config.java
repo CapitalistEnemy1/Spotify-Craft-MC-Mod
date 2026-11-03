@@ -28,6 +28,7 @@ public class Config {
     public int menuTime = 0;
     public int menuCam = 0;
     public boolean menuOwnBg = false;
+    public boolean customSkyboxEnabled = true;
     public int sky = 0;
     public int lastSky = 0;
     public float skyStrength = 0.8f;
@@ -80,6 +81,9 @@ public class Config {
     public boolean fxSongIntro = true;
     public boolean translate = false;
     public String translateTo = "de";
+    public boolean spotifyHudEnabled = true;
+    // Retained for backwards compatibility with existing config.json files.
+    @Deprecated
     public boolean islandEnabled = true;
     public boolean showClock = true;
     public boolean showPing = true;
@@ -124,11 +128,16 @@ public class Config {
             this.targetFps = 0;
             this.styleVersion = 9;
         }
+        if (this.styleVersion < 10) {
+            this.spotifyHudEnabled = this.islandEnabled;
+            this.styleVersion = 10;
+        }
+        this.islandEnabled = this.spotifyHudEnabled;
         this.spotifyMode = Math.max(0, Math.min(1, this.spotifyMode));
         this.rgbAccent = false;
         int fonts = Gfx.FONT_IDS.length;
         this.uiFont = Math.max(0, Math.min(fonts, this.uiFont));
-        this.lyricsFont = Math.max(0, Math.min(fonts - 1, this.lyricsFont));
+        this.lyricsFont = Math.max(0, Math.min(fonts, this.lyricsFont));
         this.sky = Math.max(-1, Math.min(SkyPreset.values().length - 1, this.sky));
         this.skyStrength = Math.max(0.1f, Math.min(1.0f, this.skyStrength));
         this.weatherAmount = Math.max(0.0f, Math.min(2.0f, this.weatherAmount));

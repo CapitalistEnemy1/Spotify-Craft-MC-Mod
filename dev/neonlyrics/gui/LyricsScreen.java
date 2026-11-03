@@ -698,6 +698,9 @@ extends class_437 {
     private void sky() {
         Config c = LyricsScreen.c();
         this.gStart(LyricsScreen.t("ui.group.general", new Object[0]), null);
+        this.toggleRow("skybox", LyricsScreen.t("ui.sky.custom.enabled", new Object[0]), LyricsScreen.t("ui.sky.custom.enabled.sub", new Object[0]), c.customSkyboxEnabled, v -> {
+            c.customSkyboxEnabled = v;
+        });
         this.toggleRow("skyon", LyricsScreen.t("ui.sky.enabled", new Object[0]), LyricsScreen.t("ui.sky.enabled.sub", new Object[0]), c.sky >= 0, v -> {
             c.sky = v != false ? Math.max(0, c.lastSky) : -1;
         });
@@ -849,7 +852,7 @@ extends class_437 {
         }, () -> {
             c.lyricsAnim = Math.floorMod(c.lyricsAnim + 1, 3);
         }));
-        int nf = Gfx.FONT_IDS.length;
+        int nf = Gfx.FONT_NAMES.length;
         this.pickerRow("font", LyricsScreen.t("opt.lyricsfont", new Object[0]), null, Gfx.FONT_NAMES[c.lyricsFont], c.lyricsFont, () -> {
             c.lyricsFont = Math.floorMod(c.lyricsFont - 1, nf);
             Gfx.clearWidths();
@@ -1044,8 +1047,8 @@ extends class_437 {
     private void display() {
         Config c = LyricsScreen.c();
         this.gStart(LyricsScreen.t("ui.display.bar", new Object[0]), null);
-        this.toggleRow("isl", LyricsScreen.t("ui.display.island", new Object[0]), LyricsScreen.t("ui.display.island.sub", new Object[0]), c.islandEnabled, v -> {
-            c.islandEnabled = v;
+        this.toggleRow("isl", LyricsScreen.t("ui.display.island", new Object[0]), LyricsScreen.t("ui.display.island.sub", new Object[0]), c.spotifyHudEnabled, v -> {
+            c.spotifyHudEnabled = v;
         });
         this.toggleRow("lisl", LyricsScreen.t("opt.lyricsisland", new Object[0]), LyricsScreen.t("ui.display.lyricsisland.sub", new Object[0]), c.lyricsIsland, v -> {
             c.lyricsIsland = v;
