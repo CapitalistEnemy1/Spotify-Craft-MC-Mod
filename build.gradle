@@ -52,7 +52,7 @@ sourceSets {
             include 'assets/**'
             include 'fabric.mod.json'
             include 'neonlyrics.mixins.json'
-            include 'neonlyrics.accesswidener'
+            include 'neonlyrics.classtweaker'
             include 'License'
         }
     }
