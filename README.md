@@ -54,7 +54,7 @@ Choose the download that matches your Minecraft version.
 
 ## Installation
 
-1. Install [Fabric Loader](https://fabricmc.net/use/) version **0.17.3 or newer** for your Minecraft version.
+1. Install [Fabric Loader](https://fabricmc.net/use/) version **0.18.0 or newer** for your Minecraft version.
 2. Download the matching [Fabric API](https://modrinth.com/mod/fabric-api) version.
 3. Place the Fabric API `.jar` file in your Minecraft `mods` folder.
 4. Download the Spotify Craft `.jar` for your Minecraft version from the [releases page](https://github.com/CapitalistEnemy1/Spotify-Craft-/releases/tag/1.0.0).
