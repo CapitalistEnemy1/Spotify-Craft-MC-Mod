@@ -28,12 +28,12 @@ dependencies {
         mappings file('build/mappings/intermediary-as-named.tiny')
     }
 
-    modImplementation 'net.fabricmc:fabric-loader:0.17.3'
+    modImplementation 'net.fabricmc:fabric-loader:0.18.0'
     modImplementation 'net.fabricmc.fabric-api:fabric-api:0.141.6+1.21.11'
 }
 
 loom {
-    accessWidenerPath = file('neonlyrics.accesswidener')
+    accessWidenerPath = file('neonlyrics.classtweaker')
 }
 
 /*
