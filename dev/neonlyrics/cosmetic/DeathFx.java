@@ -359,7 +359,7 @@ public final class DeathFx {
                 w *= 0.94;
             }
         }
-        f.cracks = (float[][])cr.toArray((T[])new float[0][]);
+        f.cracks = cr.toArray(new float[0][]);
         f.chunks = new float[42][];
         for (i2 = 0; i2 < f.chunks.length; ++i2) {
             boolean big = i2 < 12;
