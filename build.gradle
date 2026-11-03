@@ -1,0 +1,59 @@
+plugins {
+    id 'fabric-loom' version '1.13.3'
+}
+
+group = 'dev.neonlyrics'
+version = '2.1.0+mc1.21.11'
+
+base {
+    archivesName = 'spotifycraft'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://maven.fabricmc.net/'
+    }
+}
+
+dependencies {
+    minecraft 'com.mojang:minecraft:1.21.11'
+    mappings 'net.fabricmc:intermediary:1.21.11:v2'
+
+    modImplementation 'net.fabricmc:fabric-loader:0.17.3'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.141.6+1.21.11'
+}
+
+loom {
+    accessWidenerPath = file('neonlyrics.accesswidener')
+    mixin {
+        defaultRefmapName = 'neonlyrics.refmap.json'
+    }
+}
+
+/*
+ * This repository stores the decompiled Java source directly under dev/
+ * rather than using Gradle's conventional src/main/java layout.
+ */
+sourceSets {
+    main {
+        java {
+            srcDirs = ['.']
+            include 'dev/**/*.java'
+        }
+
+        resources {
+            srcDirs = ['.']
+            include 'assets/**'
+            include 'fabric.mod.json'
+            include 'neonlyrics.mixins.json'
+            include 'neonlyrics.accesswidener'
+            include 'License'
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+    options.encoding = 'UTF-8'
+}
