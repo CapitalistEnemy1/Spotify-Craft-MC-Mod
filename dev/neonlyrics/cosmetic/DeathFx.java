@@ -499,8 +499,7 @@ public final class DeathFx {
         float st = DeathFx.sTip(t);
         if (on) {
             float s;
-            void var21_30;
-            boolean bl2 = false;
+            int var21_30 = 0;
             while (var21_30 < 44 && !((s = st - 0.26f - (float)var21_30 * 0.33f) <= SH - 2.5f)) {
                 DeathFx.chainPoint(s, t, Q);
                 DeathFx.chainPoint(s + 0.06f, t, Q2);
