@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Create a Loom Tiny v2 mapping file with named identifiers equal to intermediary.
+"""Create a Loom Tiny v2 mapping file whose named namespace mirrors intermediary.
 
 The checked-in Java sources were decompiled in the intermediary namespace.
-Loom's remapping build expects a named namespace, so this script creates one
-that is an identity copy of intermediary. No Java source identifiers change.
+Loom expects a named source namespace, so this adds an identity alias without
+rewriting the decompiled Java sources.
 """
 
 from __future__ import annotations
@@ -14,10 +14,11 @@ from pathlib import Path
 from zipfile import ZipFile
 
 MAPPINGS_URL = (
-    "https://raw.githubusercontent.com/FabricMC/intermediary/"
-    "c5e588231ea76aee3cae10e5a56febe46d892709/mappings/1.21.11.tiny"
+    "https://maven.fabricmc.net/net/fabricmc/intermediary/1.21.11/"
+    "intermediary-1.21.11-v2.jar"
 )
-EXPECTED_HEADER = "v1\tofficial\tintermediary"
+MAPPINGS_ENTRY = "mappings/mappings.tiny"
+EXPECTED_HEADER = ["tiny", "2", "0", "official", "intermediary"]
 OUTPUT = Path("build/mappings/intermediary-as-named.tiny")
 
 
@@ -27,17 +28,28 @@ def main() -> None:
         headers={"User-Agent": "SpotifyCraft-build/1.0"},
     )
     with urllib.request.urlopen(request, timeout=60) as response:
-        raw = response.read().decode("utf-8")
+        archive_bytes = response.read()
+
+    with ZipFile(io.BytesIO(archive_bytes)) as archive:
+        try:
+            raw = archive.read(MAPPINGS_ENTRY).decode("utf-8")
+        except KeyError as exc:
+            raise RuntimeError(
+                f"Fabric Intermediary artifact does not contain {MAPPINGS_ENTRY}"
+            ) from exc
 
     lines = raw.splitlines()
-    if not lines or lines[0] != EXPECTED_HEADER:
+    if not lines:
+        raise RuntimeError("Fabric Intermediary mapping file is empty.")
+
+    header = lines[0].split("\t")
+    if header != EXPECTED_HEADER:
         raise RuntimeError(
-            "Unexpected Intermediary mapping format; refusing to generate "
-            "an invalid Loom mapping file."
+            "Unexpected Intermediary mapping namespaces: "
+            f"expected {EXPECTED_HEADER!r}, got {header!r}"
         )
 
-    converted = ["tiny\t2\t0\tofficial\tintermediary\tnamed"]
-    current_class = None
+    converted = ["\t".join(header + ["named"])]
     class_count = 0
     member_count = 0
 
@@ -45,43 +57,33 @@ def main() -> None:
         if not line:
             continue
 
-        parts = line.split("\t")
-        kind = parts[0]
-
-        if kind == "CLASS":
+        # Tiny v2 class rows contain one name per namespace.
+        if line.startswith("c\t"):
+            parts = line.split("\t")
             if len(parts) != 3:
-                raise RuntimeError(f"Malformed CLASS mapping on line {line_number}")
-            official_name, intermediary_name = parts[1], parts[2]
-            current_class = official_name
-            converted.append(
-                f"c\t{official_name}\t{intermediary_name}\t{intermediary_name}"
-            )
+                raise RuntimeError(
+                    f"Malformed class mapping on line {line_number}: {line!r}"
+                )
+            # The named class is deliberately identical to its intermediary name.
+            converted.append(line + "\t" + parts[2])
             class_count += 1
             continue
 
-        if kind in {"FIELD", "METHOD"}:
-            if len(parts) != 5:
+        # Field and method rows are indented one level and also contain
+        # one name per namespace. Add the intermediary name as named.
+        if line.startswith("\t"):
+            parts = line.split("\t")
+            if len(parts) != 5 or parts[1] not in {"f", "m"}:
                 raise RuntimeError(
-                    f"Malformed {kind} mapping on line {line_number}"
+                    f"Unsupported Tiny v2 member mapping on line {line_number}: "
+                    f"{line!r}"
                 )
-
-            owner, descriptor, official_name, intermediary_name = parts[1:]
-            if owner != current_class:
-                raise RuntimeError(
-                    f"Unexpected owner on line {line_number}: "
-                    f"{owner!r} (current class: {current_class!r})"
-                )
-
-            tiny_kind = "f" if kind == "FIELD" else "m"
-            converted.append(
-                f"\t{tiny_kind}\t{descriptor}\t{official_name}\t"
-                f"{intermediary_name}\t{intermediary_name}"
-            )
+            converted.append(line + "\t" + parts[4])
             member_count += 1
             continue
 
         raise RuntimeError(
-            f"Unsupported Intermediary record {kind!r} on line {line_number}"
+            f"Unsupported Tiny v2 record on line {line_number}: {line!r}"
         )
 
     if class_count == 0 or member_count == 0:
