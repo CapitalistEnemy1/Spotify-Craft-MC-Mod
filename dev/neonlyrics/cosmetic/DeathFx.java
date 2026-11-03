@@ -416,14 +416,13 @@ public final class DeathFx {
         DeathFx.cameraAxes(mc, base, pt);
         Iterator<Fx> it = ACTIVE.iterator();
         while (it.hasNext()) {
-            float tEnd;
             boolean hard;
             Fx f = it.next();
             int ms = (int)((now - f.start) / 1000000L);
             boolean bl = hard = f.kind >= 3;
             float[] table = f.kind == 2 ? DeathCards.TT : (hard ? DeathHard.TT[Math.min(f.kind - 3, DeathHard.TT.length - 1)] : TT);
             float t = table[Math.min(table.length - 1, Math.max(0, ms))];
-            float f2 = f.kind == 2 ? 4.2f : (tEnd = hard ? DeathHard.END[Math.min(f.kind - 3, DeathHard.END.length - 1)] : 4.75f);
+            float tEnd = f.kind == 2 ? 4.2f : (hard ? DeathHard.END[Math.min(f.kind - 3, DeathHard.END.length - 1)] : 4.75f);
             if (t > tEnd || ms >= table.length - 1) {
                 it.remove();
                 continue;
