@@ -103,7 +103,7 @@ public final class Gfx {
         float p = v * (1.0f - s);
         float q = v * (1.0f - f * s);
         float t = v * (1.0f - (1.0f - f) * s);
-        return (int)(r * 255.0f) << 16 | (int)(g * 255.0f) << 8 | (int)((switch (i % 6) {
+        float b = switch (i % 6) {
             case 0 -> {
                 r = v;
                 g = t;
@@ -134,7 +134,8 @@ public final class Gfx {
                 g = p;
                 yield q;
             }
-        }) * 255.0f);
+        };
+        return (int)(r * 255.0f) << 16 | (int)(g * 255.0f) << 8 | (int)(b * 255.0f);
     }
 
     public static void rect(class_332 g, int x, int y, int w, int h, int rgb, float a) {
