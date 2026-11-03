@@ -3,48 +3,76 @@ name: Build SpotifyCraft
 on:
   push:
     branches: [main, master]
+    tags: ['v*']
   pull_request:
     branches: [main, master]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
     name: Build Mod
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: gradle
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+      - name: Set up Gradle 9.1.0
+        uses: gradle/actions/setup-gradle@v6
         with:
-          gradle-version: '8.12'
+          gradle-version: '9.1.0'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./decompiled/all\ files/Spotify\ Craft/Version\ 3.5.0/build/gradlew
+      - name: Prepare intermediary source mappings
+        run: python3 scripts/prepare_intermediary_mappings.py
 
-      - name: Build with Gradle
-        working-directory: ./decompiled/all\ files/Spotify\ Craft/Version\ 3.5.0/build
-        run: ./gradlew build --no-daemon
+      - name: Build mod
+        run: gradle clean build --no-daemon
 
-      - name: Upload JAR artifact
+      - name: Verify remapped mod JAR
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mapfile -t jars < <(
+            find build/libs -maxdepth 1 -type f -name '*.jar' \
+              ! -name '*-dev.jar' \
+              ! -name '*-sources.jar' \
+              | sort
+          )
+
+          if [[ ${#jars[@]} -ne 1 ]]; then
+            echo "Expected exactly one remapped mod JAR, found ${#jars[@]}."
+            find build/libs -maxdepth 1 -type f -print || true
+            exit 1
+          fi
+
+          jar_file="${jars[0]}"
+          jar tf "$jar_file" | grep -Fxq 'fabric.mod.json'
+          jar tf "$jar_file" | grep -Fxq 'neonlyrics.mixins.json'
+          jar tf "$jar_file" | grep -Fxq 'dev/neonlyrics/NeonLyrics.class'
+
+          echo "Verified mod JAR: $jar_file"
+
+      - name: Upload mod JAR
         uses: actions/upload-artifact@v4
         with:
-          name: spotify-craft-jar
-          path: decompiled/all\ files/Spotify\ Craft/Version\ 3.5.0/build/build/libs/*.jar
-          retention-days: 7
+          name: spotifycraft-1.21.11
+          path: |
+            build/libs/*.jar
+            !build/libs/*-dev.jar
+            !build/libs/*-sources.jar
+          if-no-files-found: error
+          retention-days: 14
 
-  # Release job - triggers on version tags
   release:
     name: Create Release
     runs-on: ubuntu-latest
@@ -54,14 +82,14 @@ jobs:
       contents: write
 
     steps:
-      - name: Download JAR artifact
+      - name: Download mod JAR
         uses: actions/download-artifact@v4
         with:
-          name: spotify-craft-jar
+          name: spotifycraft-1.21.11
           path: artifacts/
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
           files: artifacts/*.jar
           generate_release_notes: true

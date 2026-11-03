@@ -25,7 +25,6 @@ import dev.neonlyrics.lyrics.NowPlaying;
 import dev.neonlyrics.sky.SkyPreset;
 import dev.neonlyrics.util.Fx;
 import java.io.OutputStream;
-import java.lang.invoke.CallSite;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -485,7 +484,7 @@ public final class SpotifyClient {
                 if (System.currentTimeMillis() > SpotifyClient.tokens.expiresAt && !SpotifyClient.refresh()) {
                     return;
                 }
-                Map<String, CallSite> h = Map.of("Authorization", "Bearer " + SpotifyClient.tokens.access);
+                Map<String, String> h = Map.of("Authorization", "Bearer " + SpotifyClient.tokens.access);
                 switch (cmd.ordinal()) {
                     default: {
                         throw new MatchException(null, null);

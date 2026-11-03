@@ -60,7 +60,7 @@ public final class FpsBoost {
     }
 
     private static void set(class_7172 o, String value) {
-        Comparable<Boolean> nv;
+        Object nv;
         Object cur = o.method_41753();
         if (cur instanceof Boolean) {
             nv = Boolean.parseBoolean(value);

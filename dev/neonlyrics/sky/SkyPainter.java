@@ -859,13 +859,11 @@ public final class SkyPainter {
     }
 
     private static float cornerAlpha(int x, int y, int w, int h, int rad) {
-        float cy;
-        float cx;
         if (rad <= 0) {
             return 1.0f;
         }
-        float f = x < rad ? (float)rad : (cx = x >= w - rad ? (float)(w - rad) : -1.0f);
-        float f2 = y < rad ? (float)rad : (cy = y >= h - rad ? (float)(h - rad) : -1.0f);
+        float cx = x < rad ? (float)rad : (x >= w - rad ? (float)(w - rad) : -1.0f);
+        float cy = y < rad ? (float)rad : (y >= h - rad ? (float)(h - rad) : -1.0f);
         if (cx < 0.0f || cy < 0.0f) {
             return 1.0f;
         }

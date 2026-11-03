@@ -65,7 +65,7 @@ public final class Island {
         }
         class_310 mc = class_310.method_1551();
         Config c = NeonLyrics.cfg();
-        if (mc.field_1690.field_1842 || mc.field_1724 == null || !c.islandEnabled) {
+        if (mc.field_1690.field_1842 || mc.field_1724 == null || !c.spotifyHudEnabled) {
             return;
         }
         if (mc.field_1755 instanceof LyricsScreen) {
@@ -82,8 +82,8 @@ public final class Island {
 
     private static void renderIsland(class_332 g, class_310 mc, Config c) {
         float targetW;
-        Object key;
-        Object text;
+        String key;
+        String text;
         Kind kind;
         boolean hasLine;
         long nowNs = System.nanoTime();

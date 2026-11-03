@@ -359,7 +359,7 @@ public final class DeathFx {
                 w *= 0.94;
             }
         }
-        f.cracks = (float[][])cr.toArray((T[])new float[0][]);
+        f.cracks = cr.toArray(new float[0][]);
         f.chunks = new float[42][];
         for (i2 = 0; i2 < f.chunks.length; ++i2) {
             boolean big = i2 < 12;
@@ -416,14 +416,13 @@ public final class DeathFx {
         DeathFx.cameraAxes(mc, base, pt);
         Iterator<Fx> it = ACTIVE.iterator();
         while (it.hasNext()) {
-            float tEnd;
             boolean hard;
             Fx f = it.next();
             int ms = (int)((now - f.start) / 1000000L);
             boolean bl = hard = f.kind >= 3;
             float[] table = f.kind == 2 ? DeathCards.TT : (hard ? DeathHard.TT[Math.min(f.kind - 3, DeathHard.TT.length - 1)] : TT);
             float t = table[Math.min(table.length - 1, Math.max(0, ms))];
-            float f2 = f.kind == 2 ? 4.2f : (tEnd = hard ? DeathHard.END[Math.min(f.kind - 3, DeathHard.END.length - 1)] : 4.75f);
+            float tEnd = f.kind == 2 ? 4.2f : (hard ? DeathHard.END[Math.min(f.kind - 3, DeathHard.END.length - 1)] : 4.75f);
             if (t > tEnd || ms >= table.length - 1) {
                 it.remove();
                 continue;
@@ -499,8 +498,7 @@ public final class DeathFx {
         float st = DeathFx.sTip(t);
         if (on) {
             float s;
-            void var21_30;
-            boolean bl2 = false;
+            int var21_30 = 0;
             while (var21_30 < 44 && !((s = st - 0.26f - (float)var21_30 * 0.33f) <= SH - 2.5f)) {
                 DeathFx.chainPoint(s, t, Q);
                 DeathFx.chainPoint(s + 0.06f, t, Q2);
