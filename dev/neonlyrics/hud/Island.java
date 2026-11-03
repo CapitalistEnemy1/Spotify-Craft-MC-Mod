@@ -82,8 +82,8 @@ public final class Island {
 
     private static void renderIsland(class_332 g, class_310 mc, Config c) {
         float targetW;
-        Object key;
-        Object text;
+        String key;
+        String text;
         Kind kind;
         boolean hasLine;
         long nowNs = System.nanoTime();
